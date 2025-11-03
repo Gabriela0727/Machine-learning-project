@@ -1,37 +1,32 @@
 # diabetes_test.py
+# project: Diabetes Prediction using K-Nearest Neighbors (KNN)
+"""
+what this project does: uses machine learning to predict whether a patient has diabetes based on 8 medical measurements. It uses the Knn, which classifies a patient by looking at the K most similar 
+patients in our training data and using a "majority vote" to make a prediction.
 
-# PROJECT: Diabetes Prediction using K-Nearest Neighbors (KNN)
+dataset: Pima Indians Diabetes Database from kaggle
+Source: https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database
 
-# WHAT THIS PROJECT DOES:
-# This project uses machine learning to predict whether a patient has diabetes
-# based on 8 medical measurements. It uses the Knn algorithm, which classifies a patient by looking at the K most similar 
-# patients in our training data and using a "majority vote" to make a prediction.
+ The dataset has 768 female patients of Pima Indian heritage. Each patient has 8 medical measurements and a diagnosis (diabetes or not).
 
-# dataset: Pima Indians Diabetes Database from kaggle
-# Source: https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database
+input Variables:
+ 1. pregnancies: Number of times pregnant
+ 2. glucose: Plasma glucose concentration 
+ 3. bloodPressure: Diastolic blood pressure 
+ 4. skinThickness: Triceps skin fold thickness 
+ 5. insulin: 2 hour serum insulin 
+ 6. BMI: Body mass index 
+ 7. DiabetesPedigreeFunction: Diabetes pedigree function (genetic factor)
+ 8. Age 
 
-# The dataset has 768 female patients of Pima Indian heritage.
-# Each patient has 8 medical measurements and a diagnosis (diabetes or not).
-
-# input Variables:
-# 1. pregnancies - Number of times pregnant
-# 2. glucose - Plasma glucose concentration (2 hours in an oral glucose tolerance test)
-# 3. bloodPressure - Diastolic blood pressure (mm Hg)
-# 4. skinThickness - Triceps skin fold thickness (mm)
-# 5. insulin - 2-Hour serum insulin (mu U/ml)
-# 6. BMI - Body mass index 
-# 7. DiabetesPedigreeFunction - Diabetes pedigree function (genetic factor)
-# 8. Age 
-
-# how knn works:
-# 1. we normalize all features so they're on the same scale (0 to 1)
-# 2. For a new patient, we calculate the distance to all training patients
-# 3. we find the K nearest (most similar) patients
-# 4. we count how many of those K neighbors have diabetes
-# 5. we predict based on the majority vote
-# For example, if K=5 and 4 out of 5 nearest neighbors have diabetes,
-# we predict this patient also has diabetes.
-
+ how knn works:
+ 1. we normalize all features so they're on the same scale (0 to 1)
+ 2. For a new patient, we calculate the distance to all training patients
+ 3. we find the K nearest (most similar) patients
+ 4. we count how many of those K neighbors have diabetes
+ 5. we predict based on the majority vote
+ For example: if K = 5 and 4 out of 5 nearest neighbors have diabetes, we predict this patient also has diabetes.
+"""
 
 import csv
 from typing import List, Tuple
@@ -122,10 +117,10 @@ def print_confusion_matrix(train_data: List[List[float]], train_labels: List[int
 def print_header():
     print("\n" + "=" * 70)
     print("║" + " " * 68 + "║")
-    print("║" + "DIABETES PREDICTION USING K-NEAREST NEIGHBORS".center(68) + "║")
+    print("║" + "Diabetes prediction using k nearest neighbors".center(68) + "║")
     print("║" + " " * 68 + "║")
     print("=" * 70)
-    print("\nThis program predicts diabetes using the KNN machine learning algorithm.")
+    print("\nThis program predicts diabetes using the KNN algorithm.")
     print("It learns from 614 patients and tests on 154 patients.")
     print("=" * 70)
 
@@ -148,9 +143,9 @@ if __name__ == "__main__":
             diabetes_outcomes.append(outcome)
     print(f"✓ Loaded {len(diabetes_parameters)} patient records")
 
-    print("\n[ 2] Normalizing features (scaling to 0-1 range)...")
+    print("\n[ 2] Normalizing features (scaling 0 to 1 range)...")
     normalize_by_feature_scaling(diabetes_parameters)
-    print("✓ All features normalized")
+    print("All features normalized")
 
     print("\n[ 3] Splitting data into training (80%) and testing (20%) sets...")
     split_index = int(len(diabetes_parameters) * 0.8)
@@ -158,8 +153,8 @@ if __name__ == "__main__":
     train_labels = diabetes_outcomes[:split_index]
     test_data = diabetes_parameters[split_index:]
     test_labels = diabetes_outcomes[split_index:]
-    print(f"✓ Training samples: {len(train_data)}")
-    print(f"✓ Testing samples:  {len(test_data)}")
+    print(f" Training samples: {len(train_data)}")
+    print(f" Testing samples:  {len(test_data)}")
     train_diabetic = sum(train_labels)
     train_non_diabetic = len(train_labels) - train_diabetic
     test_diabetic = sum(test_labels)
@@ -172,9 +167,9 @@ if __name__ == "__main__":
     print(f"  Has Diabetes (1): {test_diabetic:3d} ({test_diabetic/len(test_labels)*100:.1f}%)")
 
     print("\n[4] Testing different values of K (number of neighbors)...")
-    print("\nK is a hyperparameter - we need to find the best value!")
+    print("\nK is a hyperparameter: we need to find the best value")
     print("Too small K: Sensitive to noise (overfitting)")
-    print("Too large K: May miss local patterns (underfitting)")
+    print("Too large K: Might miss local patterns (underfitting)")
     k_values = [3, 5, 7, 9, 11, 15, 21]
     results = []
     best_k = 5
@@ -202,12 +197,12 @@ if __name__ == "__main__":
     plt.show()
 
     print(f"\n{'*' * 70}")
-    print(f"BEST RESULT: K={best_k} achieved {best_accuracy * 100:.2f}% accuracy")
+    print(f"best result: K={best_k} achieved {best_accuracy * 100:.2f}% accuracy")
     print(f"{'*' * 70}")
     print_confusion_matrix(train_data, train_labels, test_data, test_labels, best_k)
 
     print("\n" + "=" * 70)
-    print("FINAL SUMMARY".center(70))
+    print("final sumary".center(70))
     print("=" * 70)
     print(f"\n✓ Successfully classified diabetes with {best_accuracy * 100:.2f}% accuracy")
     print(f"✓ Used K={best_k} nearest neighbors")
@@ -215,9 +210,9 @@ if __name__ == "__main__":
     print(f"✓ Features: 8 medical measurements")
     print(f"✓ Classes: Binary (No Diabetes / Has Diabetes)")
     if best_accuracy >= 0.70:
-        print(f"\n🎉 SUCCESS! Achieved {best_accuracy * 100:.2f}% accuracy (requirement: 70%)")
+        print(f"\n Success! Achieved {best_accuracy * 100:.2f}% accuracy (requirement: 70%)")
     else:
-        print(f"\n⚠️  Accuracy {best_accuracy * 100:.2f}% is below 70% requirement")
+        print(f"\n Accuracy {best_accuracy * 100:.2f}% is below 70% requirement")
     print("\n" + "=" * 70)
-    print("Program completed successfully!")
+    print("Program completed successfully")
     print("=" * 70 + "\n")
