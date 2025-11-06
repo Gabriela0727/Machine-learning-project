@@ -415,4 +415,5 @@ if __name__ == "__main__":
  - https://www.researchgate.net/publication/371928243_Type_2_Diabetes_Prediction_using_K-Nearest_Neighbor_Algorithm
  - https://www.kaggle.com/code/shrutimechlearn/step-by-step-diabetes-classification?scriptVersionId=200050106
  - https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database
+ - GitHub copilot
  """
